@@ -763,6 +763,7 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 8
+  _pickedUpObject: {fileID: 4674497601344437134, guid: 05a529c6ed8389047b4d73c9ee8ddfde, type: 3}
 --- !u!4 &1091652925
 Transform:
   m_ObjectHideFlags: 0
