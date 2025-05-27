@@ -6,7 +6,7 @@ public class CameraHolder : MonoBehaviour
     public float offsetByLookDirection;
     public float smoothTime;
     private Vector3 _vel;
-    private void Update()
+    private void FixedUpdate()
     {
         var targetPos = followObject.position + followObject.forward*offsetByLookDirection;
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref _vel, smoothTime);

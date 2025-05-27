@@ -13,6 +13,8 @@ public class PlayerNavigator : MonoBehaviour
     private bool _isOnGround;
     public LayerMask lookAtLayerMask;
 
+    public PlayerState playerState;
+
 
     private void Awake()
     {
@@ -23,10 +25,11 @@ public class PlayerNavigator : MonoBehaviour
     {
         MovePlayerWithKeys();
 
-        if (playerLooksAtMouse)
-        {
-            LookAtMouse();
-        }
+            if (playerLooksAtMouse)
+            {
+                LookAtMouse();
+            }
+        
     }
 
     private void LookAtMouse()
@@ -51,21 +54,25 @@ public class PlayerNavigator : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             direction += Vector3.forward;
+            playerState = PlayerState.WalkingForwards;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
             direction += Vector3.back;
+            playerState = PlayerState.WalkingBackwards;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             direction += Vector3.left;
+            playerState = PlayerState.WalkingForwards;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
             direction += Vector3.right;
+            playerState = PlayerState.WalkingForwards;
         }
 
         var yVelocity = _rb.linearVelocity;
@@ -80,6 +87,7 @@ public class PlayerNavigator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isOnGround)
         {
             _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, jumpPower, _rb.linearVelocity.z);
+            //playerState = PlayerState.Jumping;
         }
 
     }
@@ -88,4 +96,13 @@ public class PlayerNavigator : MonoBehaviour
     {
         _rb.position = Vector3.zero;
     }
+}
+
+public enum PlayerState
+{
+    Idle,
+    WalkingForwards,
+    WalkingBackwards,
+    Jumping,
+    Dead,
 }
