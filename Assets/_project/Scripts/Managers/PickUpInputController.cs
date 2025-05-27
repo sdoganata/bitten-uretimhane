@@ -5,7 +5,7 @@ public class PickUpInputController : MonoBehaviour
     public LayerMask pickUpLayerMask;
     public LayerMask groundLayerMask;
 
-    public GameObject _pickedUpObject;
+    private GameObject _pickedUpObject;
 
     private void Update()
     {

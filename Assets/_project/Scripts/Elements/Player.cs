@@ -11,7 +11,12 @@ public class Player : MonoBehaviour
     }
     internal void RestartPlayer()
     {
+        gameObject.SetActive(true);
         _playerNavigator.ResetPosition();
     }
 
+    internal void GetHit()
+    {
+        gameObject.SetActive(false);
+    }
 }

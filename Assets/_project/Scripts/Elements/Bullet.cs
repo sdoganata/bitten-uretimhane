@@ -9,6 +9,9 @@ public class Bullet : MonoBehaviour
     private Weapon _weapon;
     public int damage;
 
+    public Color enemyImpactParticleColor;
+    public Color groundImpactParticleColor;
+
     private void Awake()
     {
         _tr = transform;
@@ -34,6 +37,13 @@ public class Bullet : MonoBehaviour
         {
             //Destroy(other.gameObject);
             other.GetComponent<Enemy>().GetHit(damage);
+            //var particleColor = new Color(1, .2f, .2f, 1);
+            GameDirector.instance.fxManager.PlayBulletImpactFX(_tr.position, _tr.forward, enemyImpactParticleColor);
+            Destroy(gameObject);
+        }
+        if (other.CompareTag("Ground"))
+        {
+            GameDirector.instance.fxManager.PlayBulletImpactFX(_tr.position, _tr.forward, groundImpactParticleColor);
             Destroy(gameObject);
         }
     }

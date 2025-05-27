@@ -8,6 +8,8 @@ public class Weapon : MonoBehaviour
     //private float _lastAttackTime;
     private float _attackTimer;
 
+    //public GameObject bullets; for a more ordered hierarchy but whatever
+
     private void Update()
     {
         if (Input.GetMouseButton(0) && _attackTimer > attackRate)

@@ -3,9 +3,19 @@ using UnityEngine;
 
 public class GameDirector : MonoBehaviour
 {
+    public static GameDirector instance;
 
     public LevelManager levelManager;
+    public CoinManager coinManager;
+    public FXManager fxManager;
     public Player player;
+
+    //public ParticleSystem testPS;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -26,11 +36,20 @@ public class GameDirector : MonoBehaviour
         {
             LoadPreviousLevel();
         }
+        /*if (Input.GetKeyDown(KeyCode.M))
+        {
+            testPS.Play();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            testPS.Stop();
+        }*/
     }
 
     private void RestartLevel()
     {
         levelManager.RestartLevelManager();
+        //coinManager.RestartCoinManager();
         player.RestartPlayer();
     }
 
@@ -51,5 +70,14 @@ public class GameDirector : MonoBehaviour
             levelManager.levelNo -= 1;
         }
         RestartLevel();
+    }
+
+    public void LevelCompleted()
+    {
+        Invoke(nameof(LoadNextLevel), 1f);
+    }
+    public void Lose()
+    {
+
     }
 }
