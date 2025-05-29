@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     public PlayerState playerState;
     //private PlayerState prevState;
 
+    public int startHealth;
+    private int _currentHealth;
+
     private void Awake()
     {
         _playerNavigator = GetComponent<PlayerNavigator>();

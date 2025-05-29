@@ -5,6 +5,7 @@ public class GameDirector : MonoBehaviour
 {
     public static GameDirector instance;
 
+    [Header("Manager")]
     public LevelManager levelManager;
     public CoinManager coinManager;
     public FXManager fxManager;
@@ -12,6 +13,10 @@ public class GameDirector : MonoBehaviour
     public Player player;
     public CameraHolder cameraHolder;
     //public ParticleSystem testPS;
+
+    [Header("UI")]
+    public PlayerHeatlhUI playerHeatlhUI;
+
 
     private void Awake()
     {
