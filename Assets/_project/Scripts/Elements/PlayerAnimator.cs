@@ -3,36 +3,64 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
 
-    public PlayerState playerState;
+    //public PlayerNavigator _playerNavigator;
+    //private PlayerState prevState;
+
     private Animator _animator;
-    private PlayerState prevState;
+    public PlayerAnimationState playerAnimationState;
+
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
-        prevState = PlayerState.Idle;
+        //_playerNavigator = GetComponent<PlayerNavigator>();
+        //prevState = PlayerState.Idle;
     }
 
-    private void Update()
+    public void PlayIdleAnimation()
     {
-        if (playerState == PlayerState.WalkingForwards && prevState != PlayerState.WalkingForwards)
+        if (playerAnimationState != PlayerAnimationState.Idle)
+        {
+            playerAnimationState = PlayerAnimationState.Idle;
+            _animator.SetTrigger("Idle");
+        }
+    }
+    public void PlayRunAnimation(float angle)
+    {
+        if (playerAnimationState != PlayerAnimationState.Running)
+        {
+            playerAnimationState = PlayerAnimationState.Running;
+            _animator.SetTrigger("Running");
+        }
+        _animator.SetFloat("WalkDirectionAngle", angle);
+    }
+
+    /*private void Update()
+    {
+        if (_playerNavigator.playerState == PlayerState.WalkingForwards && prevState != PlayerState.WalkingForwards)
         {
             _animator.ResetTrigger("Idle");
             _animator.SetTrigger("Walking Forwards");
         }
-        if (playerState == PlayerState.WalkingBackwards && prevState != PlayerState.WalkingBackwards)
+        if (_playerNavigator.playerState == PlayerState.WalkingBackwards && prevState != PlayerState.WalkingBackwards)
         {
             _animator.ResetTrigger("Idle");
             _animator.SetTrigger("Walking Backwards");
         }
-        if (playerState == PlayerState.Idle && prevState != PlayerState.Idle)
+        if (_playerNavigator.playerState == PlayerState.Idle && prevState != PlayerState.Idle)
         {
             _animator.SetTrigger("Idle");
         }
-        /*if (playerState == PlayerState.Jumping)
-        {
-            _animator.SetTrigger("Jumping");
-        }*/
+        //if (playerState == PlayerState.Jumping)
+        //{
+        //    _animator.SetTrigger("Jumping");
+        //}
 
-        prevState = playerState;
-    }
+        prevState = _playerNavigator.playerState;
+    }*/
+}
+
+public enum PlayerAnimationState
+{
+    Idle,
+    Running,
 }

@@ -13,13 +13,15 @@ public class PlayerNavigator : MonoBehaviour
     private bool _isOnGround;
     public LayerMask lookAtLayerMask;
 
-    public PlayerState playerState;
+    //public PlayerState playerState;
+    private PlayerAnimator _playerAnimator;
 
 
     private void Awake()
     {
         _tr = GetComponent<Transform>();
         _rb = GetComponent<Rigidbody>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
     }
     private void Update()
     {
@@ -50,29 +52,30 @@ public class PlayerNavigator : MonoBehaviour
     void MovePlayerWithKeys()
     {
         var direction = Vector3.zero;
+        //playerState = PlayerState.Idle;
 
         if (Input.GetKey(KeyCode.W))
         {
             direction += Vector3.forward;
-            playerState = PlayerState.WalkingForwards;
+            //playerState = PlayerState.WalkingForwards;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
             direction += Vector3.back;
-            playerState = PlayerState.WalkingBackwards;
+            //playerState = PlayerState.WalkingBackwards;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             direction += Vector3.left;
-            playerState = PlayerState.WalkingForwards;
+            //playerState = PlayerState.WalkingForwards;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
             direction += Vector3.right;
-            playerState = PlayerState.WalkingForwards;
+            //playerState = PlayerState.WalkingForwards;
         }
 
         var yVelocity = _rb.linearVelocity;
@@ -90,6 +93,16 @@ public class PlayerNavigator : MonoBehaviour
             //playerState = PlayerState.Jumping;
         }
 
+        if (direction.magnitude > 0.1f)
+        {
+            var angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+            _playerAnimator.PlayRunAnimation(angle);
+        }
+        else
+        {
+            _playerAnimator.PlayIdleAnimation();
+        }
+
     }
 
     public void ResetPosition()
@@ -98,11 +111,11 @@ public class PlayerNavigator : MonoBehaviour
     }
 }
 
-public enum PlayerState
+/*public enum PlayerState
 {
     Idle,
     WalkingForwards,
     WalkingBackwards,
     Jumping,
     Dead,
-}
+}*/

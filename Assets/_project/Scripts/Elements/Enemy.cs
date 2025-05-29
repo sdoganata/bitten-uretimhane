@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 using DG.Tweening;
 using NUnit.Framework;
 using UnityEngine;
@@ -23,7 +25,13 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private bool _isAttackInProgress;
     public List<Light> eyeLights;
-
+    public float flashDuration;
+    public Material flashMaterial;
+    
+    public Material originalMaterial1;
+    public Material originalMaterial2;
+    public List<Renderer> renderers1;
+    public List<Renderer> renderers2;
     /*private Rigidbody _rb;
     public float speed;
 
@@ -121,16 +129,20 @@ public class Enemy : MonoBehaviour
         enemyState = EnemyState.Walking;
         _animator.SetTrigger("Walk");
         _navAgent.isStopped = false;
+
+        GameDirector.instance.audioManager.PlayZombieGrowlSFX();
     }
 
     public void GetHit(int damage)
     {
+        GameDirector.instance.audioManager.PlayGetHitSFX();
         _currentHealth -= damage;
         _healthBar.UpdateHealthBar((float)_currentHealth / startHealth);
         if (_currentHealth <= 0 && enemyState != EnemyState.Dead)
         {
             Die();
         }
+        StartCoroutine(FlashEnemyCoRoutine());
     }
 
     private void Die()
@@ -176,6 +188,26 @@ public class Enemy : MonoBehaviour
         deadCollider.enabled = true;
     }
 
+    IEnumerator FlashEnemyCoRoutine()
+    {
+        foreach (var r in renderers1)
+        {
+            r.material = flashMaterial;
+        }
+        foreach (var r in renderers2)
+        {
+            r.material = flashMaterial;
+        }
+        yield return new WaitForSeconds(flashDuration);
+        foreach (var r in renderers1)
+        {
+            r.material = originalMaterial1;
+        }
+        foreach (var r in renderers2)
+        {
+            r.material = originalMaterial2;
+        }
+    }
     
 }
 

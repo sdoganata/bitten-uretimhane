@@ -36,16 +36,24 @@ public class Player : MonoBehaviour
     {
         gameObject.SetActive(true);
         _playerNavigator.ResetPosition();
-        playerState = PlayerState.Idle;
     }
 
     internal void GetHit()
     {
+        GameDirector.instance.audioManager.PlayGetHitSFX();
+
         if (playerState != PlayerState.Dead)
         {
         //gameObject.SetActive(false);
         playerState = PlayerState.Dead;
             _animator.SetTrigger("Die");
         }
+        GameDirector.instance.cameraHolder.ShakeCamera(.5f, .5f);
+
     }
+}
+
+public enum PlayerState
+{
+    Dead,
 }

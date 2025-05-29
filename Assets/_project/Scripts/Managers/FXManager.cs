@@ -6,11 +6,14 @@ public class FXManager : MonoBehaviour
     public ParticleSystem serumCollectedPS;
     public ParticleSystem bulletCollectedPS;
 
+    public AudioManager audioManager;
+
     public void PlayCoinCollectedFX(Vector3 pos)
     {
         var newPS = Instantiate(coinCollectedPS);
         newPS.transform.position = pos;
         newPS.Play();
+        audioManager.PlayCoinCollectedSFX();
     }
     public void PlaySerumCollectedFX(Vector3 pos)
     {

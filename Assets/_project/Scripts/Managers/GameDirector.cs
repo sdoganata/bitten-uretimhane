@@ -8,8 +8,9 @@ public class GameDirector : MonoBehaviour
     public LevelManager levelManager;
     public CoinManager coinManager;
     public FXManager fxManager;
+    public AudioManager audioManager;
     public Player player;
-
+    public CameraHolder cameraHolder;
     //public ParticleSystem testPS;
 
     private void Awake()
