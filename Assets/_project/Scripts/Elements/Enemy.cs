@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour
     public Material originalMaterial2;
     public List<Renderer> renderers1;
     public List<Renderer> renderers2;
+
+    private Coroutine _getHitCoroutine;
+    public float getHitStopDuration;
     /*private Rigidbody _rb;
     public float speed;
 
@@ -142,7 +145,10 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
-        StartCoroutine(FlashEnemyCoRoutine());
+        else
+        {
+            _getHitCoroutine = StartCoroutine(EnemyGetHitCoroutine());
+        }
     }
 
     private void Die()
@@ -170,6 +176,16 @@ public class Enemy : MonoBehaviour
             //l.enabled = false;
             l.DOIntensity(0, 1);
         }
+        StopCoroutine(_getHitCoroutine);
+        foreach (var r in renderers1)
+        {
+            r.material = originalMaterial1;
+        }
+        foreach (var r in renderers2)
+        {
+            r.material = originalMaterial2;
+        }
+
     }
 
     public void ExpireEnemy ()
@@ -188,7 +204,7 @@ public class Enemy : MonoBehaviour
         deadCollider.enabled = true;
     }
 
-    IEnumerator FlashEnemyCoRoutine()
+    IEnumerator EnemyGetHitCoroutine()
     {
         foreach (var r in renderers1)
         {
@@ -198,6 +214,10 @@ public class Enemy : MonoBehaviour
         {
             r.material = flashMaterial;
         }
+        if (_navAgent.enabled)
+        {
+            _navAgent.isStopped = true;
+        }
         yield return new WaitForSeconds(flashDuration);
         foreach (var r in renderers1)
         {
@@ -206,6 +226,11 @@ public class Enemy : MonoBehaviour
         foreach (var r in renderers2)
         {
             r.material = originalMaterial2;
+        }
+        yield return new WaitForSeconds(getHitStopDuration);
+        if (_navAgent.enabled)
+        {
+            _navAgent.isStopped = false;
         }
     }
     

@@ -1,8 +1,10 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerHeatlhUI : MonoBehaviour
+public class PlayerHealthUI : MonoBehaviour
 {
+    public Image healthBar;
     //public ImageConversion healthBar;
     private CanvasGroup _canvasGroup;
 
@@ -26,6 +28,11 @@ public class PlayerHeatlhUI : MonoBehaviour
 
     public void UpdateHealth(float ratio)
     {
-
+        
+        healthBar.DOKill();
+        healthBar.DOFillAmount(ratio, .2f);
+        healthBar.color = new Color(.64f, .15f, .15f, 1);
+        healthBar.DOColor(Color.white, .1f).SetLoops(2, LoopType.Yoyo);
+        //healthBar.fillAmount = ratio;
     }
 }

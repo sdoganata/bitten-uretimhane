@@ -3,11 +3,16 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioSource machinegunShootAS;
+    public AudioSource shotgunShootAS;
     public AudioSource coinCollectedAS;
     public AudioSource getHitAS;
     public AudioSource zombieGrowlAS;
 
     public void PlayMachineGunShootSFX()
+    {
+        shotgunShootAS.Play();
+    }
+    public void PlayShotgunShootSFX()
     {
         machinegunShootAS.Play();
     }
@@ -19,12 +24,12 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayGetHitSFX()
     {
-        coinCollectedAS.Play();
+        getHitAS.Play();
 
     }
     public void PlayZombieGrowlSFX()
     {
-        coinCollectedAS.Play();
+        zombieGrowlAS.Play();
 
     }
 }

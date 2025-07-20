@@ -11,12 +11,19 @@ public class GameDirector : MonoBehaviour
     public FXManager fxManager;
     public AudioManager audioManager;
     public Player player;
-    public CameraHolder cameraHolder;
     //public ParticleSystem testPS;
 
     [Header("UI")]
-    public PlayerHeatlhUI playerHeatlhUI;
+    public MainMenu mainMenu;
+    public PlayerHealthUI playerHealthUI;
+    public PlayerHitUI playerHitUI;
+    public MessageUI messageUI;
+    public InventoryUI inventoryUI;
 
+    public CameraHolder cameraHolder;
+
+
+    public GameState gameState;
 
     private void Awake()
     {
@@ -25,13 +32,15 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        RestartLevel();
+        gameState = GameState.MainMenu;
+        HideInGameUI();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            mainMenu.Hide();
             RestartLevel();
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -41,6 +50,15 @@ public class GameDirector : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             LoadPreviousLevel();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            gameState = GameState.MainMenu;
+            mainMenu.Show();
+            mainMenu.EnableResumeButton();
+            mainMenu.startButtonTMP.text = "RESTART";
+            HideInGameUI();
         }
         /*if (Input.GetKeyDown(KeyCode.M))
         {
@@ -52,11 +70,13 @@ public class GameDirector : MonoBehaviour
         }*/
     }
 
-    private void RestartLevel()
+    public void RestartLevel()
     {
+        gameState = GameState.GamePlay;
         levelManager.RestartLevelManager();
         //coinManager.RestartCoinManager();
         player.RestartPlayer();
+        ShowInGameUI();
     }
 
 
@@ -86,4 +106,27 @@ public class GameDirector : MonoBehaviour
     {
 
     }
+
+    internal void ShowInGameUI()
+    {
+        playerHealthUI.Show();
+        coinManager.coinUI.Show();
+        inventoryUI.Show();
+    }
+
+    internal void HideInGameUI()
+    {
+        playerHealthUI.Hide();
+        coinManager.coinUI.Hide();
+        inventoryUI.Hide();
+    }
+}
+
+
+public enum GameState
+{
+    MainMenu,
+    GamePlay,
+    VictoryUI,
+    FailUI,
 }

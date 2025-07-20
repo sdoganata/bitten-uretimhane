@@ -293,6 +293,7 @@ MonoBehaviour:
   - {fileID: 2973432400525403209}
   - {fileID: 6390599288947244037}
   - {fileID: 4784940772658273372}
+  getHitStopDuration: 0.3
 --- !u!1 &4310668584005776716
 GameObject:
   m_ObjectHideFlags: 0

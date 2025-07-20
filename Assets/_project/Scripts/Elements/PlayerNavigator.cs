@@ -25,6 +25,10 @@ public class PlayerNavigator : MonoBehaviour
     }
     private void Update()
     {
+        if (GameDirector.instance.gameState != GameState.GamePlay)
+        {
+            return;
+        }
         MovePlayerWithKeys();
 
             if (playerLooksAtMouse)

@@ -10,10 +10,34 @@ public class CameraHolder : MonoBehaviour
 
     public Camera mainCamera;
     private Vector3 _cameraStartPos;
+    
+    public Player player;
+    public LayerMask groundLayerMask;
+    private Transform _playerTransform;
+    private Transform _mainCameraTransform;
 
     private void Start()
     {
         _cameraStartPos = mainCamera.transform.localPosition;
+        _playerTransform = player.transform;
+        _mainCameraTransform = mainCamera.transform;
+    }
+
+    private void Update()
+    {
+        var distanceVector = _playerTransform.position - _mainCameraTransform.position;
+        if (Physics.Raycast(_mainCameraTransform.position,
+            distanceVector, out var hit, distanceVector.magnitude, groundLayerMask))
+        {
+            //material color reduce alpha
+        }
+        if (hit.transform == null)
+        {
+            //do this for left and right of the player and then if one of them hits but player's doesn't
+            //make object colored again
+
+        }
+
     }
 
     private void FixedUpdate()
